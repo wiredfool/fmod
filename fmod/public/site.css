@@ -1,0 +1,96 @@
+.home h1, .home h2, .home p, .home a{
+ 	font-size:200%;
+	display:block;
+}
+.home a.left {
+	float:left;
+}
+.home a.right {
+	float:right;
+}
+.inline { display: inline; }
+
+.home div.yui-u {
+	text-align:center;
+
+}
+
+.home div.yui-u div.border {
+	border: 3px solid #999;	
+	margin: 3px;
+	margin-bottom:18px;
+	padding: 25px;
+	padding-top: 0px;
+	height: 200px;
+}
+
+h1 a {
+	text-decoration:none;
+	color: inherit;
+}
+
+h1 a:hover {
+	text-decoration:none;
+	color: inherit;
+	background: #ddd;
+}
+
+#hd {
+	font-size:200%;
+	/*background: #633;*/
+	color: #633;
+	padding-top:5px;
+	padding-left:10px;
+}
+
+#hd h1 {
+	margin: 0.25em 0;
+}
+#menu { 
+	margin-left: .5em;
+	margin-top: 0;
+}
+#menu li {
+	list-style-type: none;
+}
+
+#menu li a {
+	display:block;
+	padding: 1em;
+	padding-bottom: 2em;
+	float: left;
+}
+
+#menu li a:hover {
+	background: #ddd;
+}
+
+div.d_ping_image {
+	border: 2px solid #ccc; 
+	margin:3px; 
+	padding:3px;
+}
+
+div.d_ping_image h2 {
+	display:inline;
+}
+
+div.d_image_info {
+	padding-top:5px;
+	clear: all;
+}
+
+div.moderate a {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+div.moderate a:hover {
+	background: #ddd;
+}
+
+div.moderate {
+	clear: all;
+}	
