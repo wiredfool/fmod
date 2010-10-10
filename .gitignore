@@ -5,3 +5,7 @@ data/sessions/*
 data/templates/*
 *.pyc
 *.ini
+*.log
+*.pid
+build
+dist
