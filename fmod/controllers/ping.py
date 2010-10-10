@@ -138,7 +138,7 @@ class PingController(BaseController):
 		if request.params.get('v',False) == '2':
 			#version 2 response.
 			response.headers['content-type'] = 'text/javascript'
-			return """YAHOO.util.Dom.get('context-link-pool-71917374__at__N00').appendChild(document.createTextNode('(Flagged)'))"""
+			return """YUI().use('node', function(Y) {Y.one('#context-num-pool-71917374__at__N00').insert(document.createTextNode(' (Flagged) '), 'before')})"""
 		else:
 			#version 1 response
 			"""	   q='uid='+uid+'&id='+p.id+'&own='+p.ownerNsid+'&sec='+p.secret+'&con='+nextprev_currentContextID;
