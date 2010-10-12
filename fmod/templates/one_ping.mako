@@ -4,7 +4,10 @@
 %endif
 	<%include file='image_core.mako' />
 %if c.ping.username:
-	 Reported by: ${c.ping.username}<br />
+	 Reported by: ${c.ping.username} 
+%endif
+%if c.ping.reason == 'Bump':
+	for bumping.
 %endif
 <p></p>
 </div>

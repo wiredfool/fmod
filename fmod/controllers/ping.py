@@ -1,6 +1,6 @@
 import logging
 
-from pylons import request, response, session, tmpl_context as c
+from pylons import config, request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to
 
 from fmod.lib.base import BaseController, render
@@ -13,7 +13,9 @@ import md5
 import time, datetime
 
 #useful for this case.
-from fmod.model import Ping
+from fmod.model import Ping, ImageHistory
+from flickrapi import FlickrAPI
+
 
 class PingController(BaseController):
 
@@ -146,3 +148,40 @@ class PingController(BaseController):
 			"""
 			response.headers['content-type'] = 'text/javascript'
 			return """Y.D.get('contextTitle_pool71917374@N00').appendChild(document.createTextNode('(Flagged)'))"""
+
+
+	def dup_scan(self):
+		log.debug('dup ping')
+		fapi = FlickrAPI(config['api_key'], config['api_secret'])
+		try:
+			rsp = fapi.groups_pools_getPhotos(api_key=config['api_key'],
+							  group_id=config['group_id'],
+							  extras='last_update',
+							  per_page='50',
+							  page='1')
+		except(Exception,msg):
+			log.debug(msg.args)
+			return False
+		photos = rsp.find('photos')
+		for photo in photos.getchildren():
+			image = photo.get('id')
+			dt = int(photo.get('dateadded'))
+			if ImageHistory.get(image=image, dt=dt):
+				log.debug('found high water mark, quitting')
+				break
+			if ImageHistory.get_all(image=image):
+				log.debug('found a re-add')
+				p = Ping()
+				p.image = image
+				p.owner = photo.get('owner')
+				p.reason = "Bump"
+				p.username = 'RoboMod'
+				p.save()
+				Ping.commit()
+				
+			ih = ImageHistory()
+			ih.image = image
+			ih.dt = dt
+			ih.save()
+		ImageHistory.commit()
+		return "successful"

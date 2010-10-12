@@ -14,6 +14,9 @@ if len(c.atts['notes']):
 	context.write('<b>Notes:</b> %s<br />' % (', '.join([s.strip() for s in c.atts['notes']]))) 
 if len(c.atts['comments']): 
 	context.write('<b>Owner Comments:</b><br />%s<br />' % ('<br /> '.join(c.atts['comments']))) 
+if (c.atts['ctHistory'] > 1):
+	context.write("<br clear='all'>This image has been seen %s time(s) in the pool and moderated %s time(s)." %
+					  			   (c.atts['ctHistory'],c.atts['ctDecisions']))
 %>
 </div>
 <br clear='all' />

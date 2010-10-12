@@ -98,15 +98,6 @@ t_pseudopings = sa.Table("pseudopings", meta.metadata,
 				   )
 orm.mapper(PseudoPing, t_pseudopings)
 
-
-t_users = sa.Table("users", meta.metadata,
-				   sa.Column("username", sa.types.Text, primary_key=True),
-				   sa.Column("secret", sa.types.Text, primary_key=False),
-				   sa.Column("password", sa.types.Text, primary_key=False),
-				   sa.Column("admin", sa.types.Boolean, primary_key=False),
-				   sa.Column("nsid", sa.types.Boolean, primary_key=False),
-)
-
 class Decision(base_orm):
 	def update_pings(self):
 		for ping in Ping.get_all(image=self.image):
@@ -134,6 +125,24 @@ t_decisions = sa.Table('decisions', meta.metadata,
 					   )
 orm.mapper(Decision, t_decisions)
 
+
+t_imagehistory = sa.Table('imagehistory', meta.metadata,                       
+                       sa.Column("image", sa.types.Text, primary_key=True),
+                       sa.Column("dt", sa.types.Integer, primary_key=True),)
+
+class ImageHistory(base_orm):
+    pass
+
+orm.mapper(ImageHistory, t_imagehistory)
+
+
+t_users = sa.Table("users", meta.metadata,
+				   sa.Column("username", sa.types.Text, primary_key=True),
+				   sa.Column("secret", sa.types.Text, primary_key=False),
+				   sa.Column("password", sa.types.Text, primary_key=False),
+				   sa.Column("admin", sa.types.Boolean, primary_key=False),
+				   sa.Column("nsid", sa.types.Boolean, primary_key=False),
+)
 
 class User(base_orm):
 	@classmethod
@@ -262,19 +271,25 @@ class Image(base_orm):
 		return Ping.get_all(owner=self.owner)
 
 	def getDecisions(self):
-		return Ping.get_all(image=self.image)
+		return Decision.get_all(image=self.image)
 
 	def getDecisions_forOwner(self):
 		# join, not easy.
 		pass
-		
+
+	def getHistory(self):
+		return ImageHistory.get_all(image=self.image)
+
 	def all_atts(self):
 		self._setup_atts()
 		#kickoff
 		workers = [worker(getattr(self,method)) for method in ['in_pool',
 															   'owner_comments',
 															   'info']]
-		# wait for them all to finish
+
+		self.atts['ctHistory'] = len(self.getHistory())
+		self.atts['ctDecisions'] = len(self.getDecisions())
+		# wait for them all to finish		
 		[w.isAlive() and w.join() for w in workers]
 		if hasattr(self, 'fl_dirty') and self.fl_dirty:
 			self.commit()
