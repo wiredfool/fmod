@@ -290,7 +290,7 @@ class Image(base_orm):
 															   'info']]
 		decisions = self.getDecisions()
 		history = self.getHistory()
-		self.atts['ctNsi'] = sum([1 for d in decisions if d.fl_nsi])
+		self.atts['ctNsi'] = sum([1 for d in decisions if d.fl_nsi or d.fl_isi])
 		self.atts['ctOk'] = sum([1 for d in decisions if d.fl_ok])
 		self.atts['history'] = [time.strftime('%X %x', time.gmtime(h.dt)) for h in history]
 		self.atts['ctHistory'] = len(history)
