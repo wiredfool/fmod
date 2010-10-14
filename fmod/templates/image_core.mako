@@ -16,7 +16,13 @@ if len(c.atts['comments']):
 	context.write('<b>Owner Comments:</b><br />%s<br />' % ('<br /> '.join(c.atts['comments']))) 
 if (c.atts['ctHistory'] > 1):
 	context.write("<br clear='all'>This image has been seen %s time(s) in the pool and moderated %s time(s)." %
-					  			   (c.atts['ctHistory'],c.atts['ctDecisions']))
+								   (c.atts['ctHistory'],c.atts['ctDecisions']))
+if c.atts['ctNsi']:
+	context.write('  %s no strobist info' % c.atts['ctNsi'])
+if c.atts['ctOk']:
+	context.write('  Moderated %s ok' % c.atts['ctOk'])
+if c.atts['history'] and c.atts['ctHistory'] > 1:
+	context.write("<br />Bumps (GMT): "+', '.join([h for h in c.atts['history']]))
 %>
 </div>
 <br clear='all' />

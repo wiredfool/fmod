@@ -11,6 +11,8 @@ try:
 except:
     import xml.etree.ElementTree as et
 
+import time
+
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
     ## Reflected tables must be defined and mapped here
@@ -286,9 +288,13 @@ class Image(base_orm):
 		workers = [worker(getattr(self,method)) for method in ['in_pool',
 															   'owner_comments',
 															   'info']]
-
-		self.atts['ctHistory'] = len(self.getHistory())
-		self.atts['ctDecisions'] = len(self.getDecisions())
+		decisions = self.getDecisions()
+		history = self.getHistory()
+		self.atts['ctNsi'] = sum([1 for d in decisions if d.fl_nsi])
+		self.atts['ctOk'] = sum([1 for d in decisions if d.fl_ok])
+		self.atts['history'] = [time.strftime('%X %x', time.gmtime(h.dt)) for h in history]
+		self.atts['ctHistory'] = len(history)
+		self.atts['ctDecisions'] = len(decisions)
 		# wait for them all to finish		
 		[w.isAlive() and w.join() for w in workers]
 		if hasattr(self, 'fl_dirty') and self.fl_dirty:
