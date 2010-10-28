@@ -87,6 +87,13 @@ class ModerateController(BaseController):
 		except Exception, msg:
 			return msg
 
+	def bump(self, id=None):
+		try:
+			d = self._get_decision(id, 'fl_bump')
+			return self._remove(d, 'no-bumping')
+		except Exception, msg:
+			return msg
+
 
 
 		

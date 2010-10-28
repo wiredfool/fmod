@@ -123,6 +123,7 @@ t_decisions = sa.Table('decisions', meta.metadata,
 					   sa.Column("fl_ns", sa.types.Boolean, primary_key=False), # not strobist
 					   sa.Column("fl_nsi", sa.types.Boolean, primary_key=False), # no strobist info
 					   sa.Column("fl_isi", sa.types.Boolean, primary_key=False), # incomplete strobist info
+					   sa.Column("fl_bump", sa.types.Boolean, primary_key=False), # bumping
 					   sa.Column("dt", sa.types.DateTime(timezone=True), primary_key=False, default=sa.func.now()),
 					   )
 orm.mapper(Decision, t_decisions)
@@ -292,7 +293,8 @@ class Image(base_orm):
 		history = self.getHistory()
 		self.atts['ctNsi'] = sum([1 for d in decisions if d.fl_nsi or d.fl_isi])
 		self.atts['ctOk'] = sum([1 for d in decisions if d.fl_ok])
-		self.atts['history'] = [time.strftime('%X %x', time.gmtime(h.dt)) for h in history]
+		self.atts['ctBump'] = sum([1 for d in decisions if d.fl_bump])
+		self.atts['history'] = [time.strftime('%x %X', time.gmtime(h.dt)) for h in history]
 		self.atts['ctHistory'] = len(history)
 		self.atts['ctDecisions'] = len(decisions)
 		# wait for them all to finish		

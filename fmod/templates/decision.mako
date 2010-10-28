@@ -4,5 +4,6 @@
 <a href='/moderate/nsi/${c.image}' class='mod'>No Strobist Info</a>
 <a href='/moderate/isi/${c.image}' class='mod'>Incomplete Info</a>
 <a href='/moderate/nsfw/${c.image}' class='mod'>NSFW</a>
+<a href='/moderate/bump/${c.image}' class='mod'>Bumped</a>
 <a href='/moderate/defer/${c.image}' class='mod'>Defer Decision</a>
 </div>

@@ -15,12 +15,17 @@ if len(c.atts['notes']):
 if len(c.atts['comments']): 
 	context.write('<b>Owner Comments:</b><br />%s<br />' % ('<br /> '.join(c.atts['comments']))) 
 if (c.atts['ctHistory'] > 1):
-	context.write("<br clear='all'>This image has been seen %s time(s) in the pool and moderated %s time(s)." %
+	context.write("<br clear='all'>This image has been seen %s time(s) in the pool and moderated %s time(s).  " %
 								   (c.atts['ctHistory'],c.atts['ctDecisions']))
+arrMod = []
 if c.atts['ctNsi']:
-	context.write('  %s no strobist info' % c.atts['ctNsi'])
+	arrMod.append('%s no strobist info' % c.atts['ctNsi'])
+if c.atts['ctBump']:
+	arrMod.append('%s for bumping' % c.atts['ctBump'])
 if c.atts['ctOk']:
-	context.write('  Moderated %s ok' % c.atts['ctOk'])
+	arrMod.append('%s ok' % c.atts['ctOk'])
+if len(arrMod):
+   context.write(', '.join(arrMod))
 if c.atts['history'] and c.atts['ctHistory'] > 1:
 	context.write("<br />Bumps (GMT): "+', '.join([h for h in c.atts['history']]))
 %>
