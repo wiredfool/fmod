@@ -49,7 +49,7 @@ class FlickrController(BaseController):
 		if not auth:
 			return "invalid response from get token"
 		
-		username = auth.find('user').get('username')
+		username = auth.find('user').get('username').encode('ascii','ignore')
 		token = auth.find('token').text
 		nsid = auth.find('user').get('nsid')
 		
