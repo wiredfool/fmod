@@ -2,7 +2,7 @@
 <%def name="head_tags()">
 	<title>Bookmarklet</title>
 </%def>
-<p>Firefox/Safari users -- drag this link: <a class='bookmarklet' href="javascript:(function(){var d=document;var i=d.createElement('script'),nsid='${c.nsid}',s='${c.secret}',q,b='${c.url}?';if(window.page_p){p=page_p;q='nsid='+nsid+'&id='+p.id+'&own='+p.ownerNsid+'&sec='+p.secret+'&con='+nextprev_currentContextID;i.src=b+q+'&s='+md5_calcMD5(q+s);d.body.appendChild(i);}else{var f=FLICKR.photo;q='nsid='+nsid+'&id='+f.getId()+'&own='+f.getOwner()+'&v=2';YUI().use('gallery-crypto-md5',function(Y) {i.src=b+q+'&s='+Y.Crypto.MD5(q+s);d.body.appendChild(i);})}})();">Flag</a> to your bookmarks bar. IE users -- make it a favorite using the right click menu, Opera users can shift-drag it to the toolbar.
+<p>Firefox/Safari users -- drag this link: <a class='bookmarklet' href="javascript:(function(){var d=document;var i=d.createElement('script'),nsid='${c.nsid}',s='${c.secret}',q,b='${c.url}?';if(window.page_p){p=page_p;q='nsid='+nsid+'&id='+p.id+'&own='+p.ownerNsid+'&sec='+p.secret+'&con='+nextprev_currentContextID;i.src=b+q+'&s='+md5_calcMD5(q+s);d.body.appendChild(i);}else{var f=FLICKR.photo;q='nsid='+nsid+'&id='+f.getId()+'&own='+f.getOwner()+'&v=2';YUI({modules:{'gallery-crypto-md5':{fullpath:'http://fmod.wiredfool.com/md5.js'}}}).use('gallery-crypto-md5',function(Y) {i.src=b+q+'&s='+Y.Crypto.MD5(q+s);d.body.appendChild(i);})}})();">Flag</a> to your bookmarks bar. IE users -- make it a favorite using the right click menu, Opera users can shift-drag it to the toolbar.
 </p>
 
 <p>
@@ -22,7 +22,8 @@ javascript:(function(){
 	}else{
 		var f=FLICKR.photo;
 		q='nsid='+nsid+'&id='+f.getId()+'&own='+f.getOwner()+'&v=2';
-		YUI().use('gallery-crypto-md5',function(Y) {
+		YUI({modules:{'gallery-crypto-md5':{fullpath:'http://fmod.wiredfool.com/md5.js'}}}
+		   ).use('gallery-crypto-md5',function(Y) {
 			i.src=b+q+'&s='+Y.Crypto.MD5(q+s);
  			d.body.appendChild(i);
 		})
