@@ -27,8 +27,8 @@ class BrowseController(BaseController):
 	def __before__(self):
 		BaseController.__before__(self)
 		# logged in...
-		c.username = session['user']
-		if not session['mod']:
+		c.username = session.get('user', None)
+		if not c.username or not session.get('mod',None):
 			redirect_to('/flickr/login')
 		#if not request.method=='GET': #UNDONE POST
 		#	throw("Error - must GET")
