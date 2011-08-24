@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <%def name="head_tags()">
 </%def>
 <%def name="menu()">

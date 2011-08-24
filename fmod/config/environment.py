@@ -36,7 +36,7 @@ def load_environment(global_conf, app_conf):
         module_directory=os.path.join(app_conf['cache_dir'], 'templates'),
         input_encoding='utf-8', output_encoding='utf-8',
         imports=['from webhelpers.html import escape'],
-        default_filters=['escape'])
+        default_filters=['decode.utf8'])
     
     # Setup SQLAlchemy database engine
     engine = engine_from_config(config, 'sqlalchemy.')

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <h2>
 Server info for ${request.host}
 </h2>

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <div id='d_ping_${c.ping.id}' class='d_ping_image'>
 %if c.fl_mod:
 	<%include file='decision.mako' />

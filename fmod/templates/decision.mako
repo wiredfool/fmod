@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <div class='moderate' id='moderate_${c.image}'>
 <a href='/moderate/ok/${c.image}' class='mod'>Keep image in pool</a>
 <a href='/moderate/ns/${c.image}' class='mod'>Not Strobist</a>

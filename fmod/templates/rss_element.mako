@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <item>
     <title>Moderation</title>
     <link>http://www.wiredfool.com/2009/02/14/moderation/</link>

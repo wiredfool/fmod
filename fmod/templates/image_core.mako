@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 <a href="${c.atts['photo_url']}"><img src="${c.atts['img_url']}" align='right' /></a>
 <div class='d_image_info'>
 <h2 style='display:inline;'><a href="${c.atts['photo_url']}">${c.atts['title']} 

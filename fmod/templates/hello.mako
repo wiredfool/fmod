@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 Hello World, the environ variable looks like: <br />
 
 <br />
