@@ -159,7 +159,7 @@ class PingController(BaseController):
 							  extras='last_update',
 							  per_page='50',
 							  page='1')
-		except(Exception,msg):
+		except Exception,msg:
 			log.debug(msg.args)
 			return False
 		photos = rsp.find('photos')
