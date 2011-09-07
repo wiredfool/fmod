@@ -20,7 +20,7 @@ except:
 from flickrapi import FlickrAPI
 
 #useful for this case.
-from fmod.model import Ping, PseudoPing, Decision
+from fmod.model import Ping, PseudoPing, Decision, ImageHistory
 
 class BrowseController(BaseController):
 
@@ -125,6 +125,14 @@ class BrowseController(BaseController):
 				if Decision.get(image=image, fl_ok=True):
 					log.debug('already decided good')
 					continue
+				if not ImageHistory.get(image=image, dt=dt):
+					log.debug("adding image history entry, since one doesn't exist yet")
+					#undone -- concurrency issue here?
+					ih = ImageHistory()
+					ih.image = image
+					ih.dt = dt
+					ih.save()
+																	
 				p = PseudoPing()
 				p.image = image
 				p.dt = dt
