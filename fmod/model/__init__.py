@@ -144,7 +144,6 @@ orm.mapper(ImageHistory, t_imagehistory)
 t_users = sa.Table("users", meta.metadata,
 				   sa.Column("username", sa.types.Text, primary_key=True),
 				   sa.Column("secret", sa.types.Text, primary_key=False),
-				   sa.Column("password", sa.types.Text, primary_key=False),
 				   sa.Column("admin", sa.types.Boolean, primary_key=False),
 				   sa.Column("nsid", sa.types.Boolean, primary_key=False),
 )
@@ -179,13 +178,7 @@ class User(base_orm):
 		if self.username in mods:
 			return True
 		return False
-
-	def set_password(self, password):
-		self.password = md5(password).hexdigest()
-
-	def check_password(self, password):
-		return self.password and self.password == md5(password).hexdigest()
-
+        
 		
 orm.mapper(User, t_users)
 

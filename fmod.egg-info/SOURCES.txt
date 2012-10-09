@@ -49,7 +49,6 @@ fmod/templates/home.mako
 fmod/templates/image_core.mako
 fmod/templates/image_view.mako
 fmod/templates/loggedin.mako
-fmod/templates/login.mako
 fmod/templates/logout.mako
 fmod/templates/member.mako
 fmod/templates/moderators.mako
@@ -58,7 +57,6 @@ fmod/templates/ping.js
 fmod/templates/ping.mako
 fmod/templates/ping_return.mako
 fmod/templates/profile.mako
-fmod/templates/register.mako
 fmod/templates/rss.mako
 fmod/templates/rss_element.mako
 fmod/templates/serverinfo.mako
