@@ -1,7 +1,7 @@
 import logging
 
-from pylons import config, request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to
+from pylons import config, request, response, session, url, tmpl_context as c
+from pylons.controllers.util import abort, redirect
 
 from fmod.lib.base import BaseController, render
 from fmod import model
@@ -9,7 +9,6 @@ from sqlalchemy import desc
 
 log = logging.getLogger(__name__)
 
-import md5
 import time, datetime
 try:
     from elementtree import ElementTree as et
@@ -29,7 +28,7 @@ class BrowseController(BaseController):
 		# logged in...
 		c.username = session.get('user', None)
 		if not c.username or not session.get('mod',None):
-			redirect_to('/flickr/login')
+			redirect(url('/flickr/login'))
 		#if not request.method=='GET': #UNDONE POST
 		#	throw("Error - must GET")
 
@@ -128,10 +127,12 @@ class BrowseController(BaseController):
 				if not ImageHistory.get(image=image, dt=dt):
 					log.debug("adding image history entry, since one doesn't exist yet")
 					#undone -- concurrency issue here?
+					#undone -- check dup here?
 					ih = ImageHistory()
 					ih.image = image
 					ih.dt = dt
 					ih.save()
+					ImageHistory.commit()
 																	
 				p = PseudoPing()
 				p.image = image

@@ -11,7 +11,7 @@ from unittest import TestCase
 
 from paste.deploy import loadapp
 from paste.script.appinstall import SetupCommand
-from pylons import config, url
+from pylons import url
 from routes.util import URLGenerator
 from webtest import TestApp
 
@@ -20,7 +20,7 @@ import pylons.test
 __all__ = ['environ', 'url', 'TestController']
 
 # Invoke websetup with the current config file
-SetupCommand('setup-app').run([config['__file__']])
+SetupCommand('setup-app').run([pylons.test.pylonsapp.config['__file__']])
 
 environ = {}
 

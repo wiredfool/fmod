@@ -2,14 +2,13 @@
 
 Provides the BaseController class for subclassing.
 """
-from pylons import session, request, tmpl_context as c
+from pylons import session, request, url, tmpl_context as c
 from pylons.controllers import WSGIController
 from pylons.templating import render_mako as render
 
-from pylons.controllers.util import redirect_to
+from pylons.controllers.util import redirect
 
 from fmod.model import meta
-import fmod.lib.helpers as h
 
 class BaseController(WSGIController):
 
@@ -25,7 +24,7 @@ class BaseController(WSGIController):
 				# after a successful login
 				session['path_before_login'] = request.path_info
 				session.save()
-				return redirect_to(h.url_for(controller='flickr', action='login_user'))
+				return redirect(url(controller='flickr', action='login_user'))
 			else:
 				c.session = session
 			

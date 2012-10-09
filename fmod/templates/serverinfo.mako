@@ -4,5 +4,5 @@ Server info for ${request.host}
 </h2>
 
 <p>
-The URL you called: ${dir(h)} .url_for()}
+The URL you called: ${dir(h)} . url.current()}
 </p>

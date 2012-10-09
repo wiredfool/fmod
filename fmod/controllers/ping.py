@@ -1,7 +1,7 @@
 import logging
 
 from pylons import config, request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to
+from pylons.controllers.util import abort
 
 from fmod.lib.base import BaseController, render
 from fmod import model
@@ -9,7 +9,7 @@ from sqlalchemy import desc
 
 log = logging.getLogger(__name__)
 
-import md5
+from hashlib import md5
 import time, datetime
 
 #useful for this case.
@@ -118,8 +118,8 @@ class PingController(BaseController):
 		log.debug(request.query_string)
 		log.debug(request.query_string[:-35]+u.secret)
 		log.debug(request.params.get('s'))
-		log.debug(md5.new(request.query_string[:-35]+u.secret).hexdigest().lower()) 
-		if md5.new(request.query_string[:-35]+u.secret).hexdigest().lower() != request.params.get('s'):
+		log.debug(md5(request.query_string[:-35]+u.secret).hexdigest().lower()) 
+		if md5(request.query_string[:-35]+u.secret).hexdigest().lower() != request.params.get('s'):
 			log.debug('bad signature')
 			return ''
 		else:

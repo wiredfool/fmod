@@ -36,6 +36,8 @@ fmod/model/__init__.py
 fmod/model/meta.py
 fmod/public/bg.png
 fmod/public/flagged.jpg
+fmod/public/gallery-crypto-md5-min.js
+fmod/public/md5.js
 fmod/public/pylons-logo.gif
 fmod/public/site.css
 fmod/public/test.html
@@ -44,7 +46,6 @@ fmod/templates/bookmarklet.mako
 fmod/templates/decision.mako
 fmod/templates/hello.mako
 fmod/templates/home.mako
-fmod/templates/image_cord.mako
 fmod/templates/image_core.mako
 fmod/templates/image_view.mako
 fmod/templates/loggedin.mako

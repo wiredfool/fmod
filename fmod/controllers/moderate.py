@@ -1,7 +1,7 @@
 import logging
 
-from pylons import request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to
+from pylons import request, response, session, url, tmpl_context as c
+from pylons.controllers.util import abort, redirect
 
 from fmod.lib.base import BaseController, render
 from fmod import model
@@ -17,7 +17,7 @@ class ModerateController(BaseController):
 		# logged in...
 		c.username = session['user']
 		if not session['mod']:
-			redirect_to('/ping/index')
+			redirect(url('/ping/index'))
 		#if not request.method=='GET': #UNDONE POST
 		#	throw("Error - must GET")
 

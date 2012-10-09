@@ -5,7 +5,9 @@ from sqlalchemy import orm
 from fmod.model import meta
 import logging
 log = logging.getLogger(__name__)
-import md5, random
+
+from hashlib import md5
+import random
 try:
     from elementtree import ElementTree as et
 except:
@@ -157,7 +159,7 @@ class User(base_orm):
 
 	def make_secret(self):
 		#not totally secure, but good enough
-		self.secret = md5.md5(str(random.random())).hexdigest()[:8]
+		self.secret = md5(str(random.random())).hexdigest()[:8]
 
 	def check_mod(self, token):
 		def cb():
@@ -179,10 +181,10 @@ class User(base_orm):
 		return False
 
 	def set_password(self, password):
-		self.password = md5.md5(password).hexdigest()
+		self.password = md5(password).hexdigest()
 
 	def check_password(self, password):
-		return self.password and self.password == md5.md5(password).hexdigest()
+		return self.password and self.password == md5(password).hexdigest()
 
 		
 orm.mapper(User, t_users)

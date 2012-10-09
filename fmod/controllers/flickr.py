@@ -1,7 +1,7 @@
 import logging
 
-from pylons import request, response, session, tmpl_context as c, config
-from pylons.controllers.util import abort, redirect_to
+from pylons import request, response, session, url, tmpl_context as c, config
+from pylons.controllers.util import abort, redirect
 
 from fmod.lib.base import BaseController, render
 from fmod import model
@@ -21,11 +21,11 @@ class FlickrController(BaseController):
 		# so that we have a 1:1 correspondence between the flickr usernames
 		# and our application usernames. 
 		fapi = FlickrAPI(config['api_key'], config['api_secret'])
-		redirect_to(fapi.web_login_url('read'))
+		redirect(url(fapi.web_login_url('read')))
 		
 	def login(self):
 		fapi = FlickrAPI(config['api_key'], config['api_secret'])
-		redirect_to(fapi.web_login_url('write'))
+		redirect(url(fapi.web_login_url('write')))
 
 	def members(self):
 		return render('member.mako')
@@ -84,9 +84,9 @@ class FlickrController(BaseController):
 		if session.get('path_before_login'):
 			path = session['path_before_login']
 			del(session['path_before_login'])
-			redirect_to(path)
+			redirect(url(path))
 		else:
 			if session.get('mod'):
-				redirect_to('/ping/index')
-			redirect_to('/profile/bookmarklet')
+				redirect(url('/ping/index'))
+			redirect(url('/profile/bookmarklet'))
 			

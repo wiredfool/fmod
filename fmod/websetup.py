@@ -1,5 +1,6 @@
 """Setup the fmod application"""
 import logging
+import pylons.test
 
 from fmod.config.environment import load_environment
 
@@ -7,7 +8,8 @@ log = logging.getLogger(__name__)
 
 def setup_app(command, conf, vars):
     """Place any commands to setup fmod here"""
-    load_environment(conf.global_conf, conf.local_conf)
+    if not pylons.test.pylonsapp:
+        load_environment(conf.global_conf, conf.local_conf)
 
     # Load the models
     from fmod.model import meta
