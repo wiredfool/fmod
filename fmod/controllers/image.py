@@ -4,7 +4,6 @@ from pylons import request, response, session, tmpl_context as c, config
 from pylons.controllers.util import abort, redirect_to
 
 from fmod.lib.base import BaseController, render
-from fmod.config.flickrprefs import flickrprefs
 from fmod import model
 
 log = logging.getLogger(__name__)
