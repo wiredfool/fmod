@@ -52,7 +52,9 @@ class base_orm(object):
 	def query(cls):
 		return meta.Session.query(cls)
 	def save(self):
-		meta.Session.save(self)
+		meta.Session.add(self) # save was deprecated between SA 0.5 and 0.8
+	def add(self):
+		meta.Session.add(self)
 	def flush(self):
 		meta.Session.flush(self)
 	@staticmethod
