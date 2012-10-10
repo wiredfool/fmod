@@ -9,28 +9,43 @@ log = logging.getLogger(__name__)
 from hashlib import md5
 import random
 try:
-    from elementtree import ElementTree as et
+	from elementtree import ElementTree as et
 except:
-    import xml.etree.ElementTree as et
+	import xml.etree.ElementTree as et
 
 import time
 
-def init_model(engine):
-    """Call me before using any of the tables or classes in the model"""
-    ## Reflected tables must be defined and mapped here
-    #global reflected_table
-    #reflected_table = sa.Table("Reflected", meta.metadata, autoload=True,
-    #                           autoload_with=engine)
-    #orm.mapper(Reflected, reflected_table)
 
-    sm = orm.sessionmaker(autoflush=True,
+from pylons import session, request
+from flickrapi import FlickrAPI
+import memcache
+import Queue
+from threading import Thread
+
+config = {}
+
+def init_model(engine, global_config):
+	"""Call me before using any of the tables or classes in the model"""
+	## Reflected tables must be defined and mapped here
+	#global reflected_table
+	#reflected_table = sa.Table("Reflected", meta.metadata, autoload=True,
+	#							autoload_with=engine)
+	#orm.mapper(Reflected, reflected_table)
+
+	sm = orm.sessionmaker(autoflush=True,
 						  autocommit=False,
 						  bind=engine,
 						  expire_on_commit=False)
 
-    meta.engine = engine
-    meta.Session = orm.scoped_session(sm)
-
+	meta.engine = engine
+	meta.Session = orm.scoped_session(sm)
+	
+    # In pylons 1.0, the config object changed and it's no longer working for 
+    # the worker threads. So, we need to stash the important bits of the 
+    # global config object here. 
+	for elt in ['api_key', 'api_secret', 'group_id', 'memcached_url']:
+		config[elt] = global_config[elt]
+	
 class base_orm(object):
 	# cause this model.meta.Session.* crap in my controllers blows.
 	@classmethod
@@ -131,12 +146,12 @@ t_decisions = sa.Table('decisions', meta.metadata,
 orm.mapper(Decision, t_decisions)
 
 
-t_imagehistory = sa.Table('imagehistory', meta.metadata,                       
-                       sa.Column("image", sa.types.Text, primary_key=True),
-                       sa.Column("dt", sa.types.Integer, primary_key=True),)
+t_imagehistory = sa.Table('imagehistory', meta.metadata,					   
+					   sa.Column("image", sa.types.Text, primary_key=True),
+					   sa.Column("dt", sa.types.Integer, primary_key=True),)
 
 class ImageHistory(base_orm):
-    pass
+	pass
 
 orm.mapper(ImageHistory, t_imagehistory)
 
@@ -178,7 +193,7 @@ class User(base_orm):
 		if self.username in mods:
 			return True
 		return False
-        
+		
 		
 orm.mapper(User, t_users)
 
@@ -191,11 +206,6 @@ t_images = sa.Table("images", meta.metadata,
 				   )
 
 
-from pylons import config, session, request
-from flickrapi import FlickrAPI
-import memcache
-import Queue
-from threading import Thread
 
 class worker(Thread):
 	def __init__(self, cb):
@@ -245,11 +255,11 @@ class mc_flickr:
 
 
 class Image(base_orm):
-## 	t_images = sa.Table("images", meta.metadata,
-## 						sa.Column("image", sa.types.Text, primary_key=True),
-## 						sa.Column("owner", sa.types.Text, primary_key=False),
-## 						sa.Column("secret", sa.types.Text, primary_key=False),
-## 						)
+##	t_images = sa.Table("images", meta.metadata,
+##						sa.Column("image", sa.types.Text, primary_key=True),
+##						sa.Column("owner", sa.types.Text, primary_key=False),
+##						sa.Column("secret", sa.types.Text, primary_key=False),
+##						)
 
 	@classmethod
 	def get_byId(cls, name):
@@ -431,12 +441,12 @@ orm.mapper(Image, t_images)
 
 ## Non-reflected tables may be defined and mapped at module level
 #foo_table = sa.Table("Foo", meta.metadata,
-#    sa.Column("id", sa.types.Integer, primary_key=True),
-#    sa.Column("bar", sa.types.String(255), nullable=False),
-#    )
+#	 sa.Column("id", sa.types.Integer, primary_key=True),
+#	 sa.Column("bar", sa.types.String(255), nullable=False),
+#	 )
 #
 #class Foo(object):
-#    pass
+#	 pass
 #
 #orm.mapper(Foo, foo_table)
 
@@ -446,4 +456,4 @@ orm.mapper(Image, t_images)
 #reflected_table = None
 #
 #class Reflected(object):
-#    pass
+#	 pass
