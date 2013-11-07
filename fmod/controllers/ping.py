@@ -152,17 +152,19 @@ class PingController(BaseController):
 
 	def dup_scan(self):
 		log.debug('dup ping')
-		fapi = FlickrAPI(config['api_key'], config['api_secret'])
+		fapi = FlickrAPI(config['api_key'], config['api_secret'], token=config['api_token'])
 		try:
 			rsp = fapi.groups_pools_getPhotos(api_key=config['api_key'],
 							  group_id=config['group_id'],
 							  extras='last_update',
 							  per_page='50',
-							  page='1')
+							  page='1', 
+							  token=config['api_token'])
 		except Exception,msg:
 			log.debug(msg.args)
 			return False
 		photos = rsp.find('photos')
+		
 		for photo in photos.getchildren():
 			image = photo.get('id')
 			dt = int(photo.get('dateadded'))

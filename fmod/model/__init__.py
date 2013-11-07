@@ -43,7 +43,7 @@ def init_model(engine, global_config):
     # In pylons 1.0, the config object changed and it's no longer working for 
     # the worker threads. So, we need to stash the important bits of the 
     # global config object here. 
-	for elt in ['api_key', 'api_secret', 'group_id', 'memcached_url']:
+	for elt in ['api_key', 'api_secret', 'group_id', 'memcached_url', 'api_token']:
 		config[elt] = global_config[elt]
 	
 class base_orm(object):
