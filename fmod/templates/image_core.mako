@@ -10,11 +10,11 @@
 --<br />
 <% 
 if len(c.atts['tags']): 
-	context.write('<b>Tags:</b> %s<br />' % (', '.join(c.atts['tags']))) 
+	context.write('<b>Tags:</b> %s<br />' % (', '.join(s for s in c.atts['tags'] if s))) 
 if len(c.atts['notes']): 
-	context.write('<b>Notes:</b> %s<br />' % (', '.join([s.strip() for s in c.atts['notes']]))) 
+	context.write('<b>Notes:</b> %s<br />' % (', '.join([s.strip() for s in c.atts['notes'] if s]))) 
 if len(c.atts['comments']): 
-	context.write('<b>Owner Comments:</b><br />%s<br />' % ('<br /> '.join(c.atts['comments']))) 
+	context.write('<b>Owner Comments:</b><br />%s<br />' % ('<br /> '.join(s for s in c.atts['comments'] if s))) 
 if (c.atts['ctHistory'] > 1):
 	context.write("<br clear='all'>This image has been seen %s time(s) in the pool and moderated %s time(s).  " %
 								   (c.atts['ctHistory'],c.atts['ctDecisions']))
@@ -28,7 +28,7 @@ if c.atts['ctOk']:
 if len(arrMod):
    context.write(', '.join(arrMod))
 if c.atts['history'] and c.atts['ctHistory'] > 1:
-	context.write("<br />Bumps (GMT): "+', '.join([h for h in c.atts['history']]))
+	context.write("<br />Bumps (GMT): "+', '.join([h for h in c.atts['history'] if h]))
 %>
 </div>
 <br clear='all' />
